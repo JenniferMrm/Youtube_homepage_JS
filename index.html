@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css" />
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="menu">
+        <i class="fi fi-rs-menu-burger"></i>
+        <img src="assets/logo.png" alt="youtube-logo" />
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search" class="input" />
+        <button class="search-button">
+          <i class="fi fi-rs-search"></i>
+        </button>
+        <i class="fi fi-rs-microphone"></i>
+      </div>
+      <div class="header-tools">
+        <i class="fi fi-rs-video-camera"></i>
+        <i class="fi fi-rs-grid"></i>
+        <i class="fi fi-rs-bell"></i>
+        <img src="assets/youtubeAvatar.png" alt="youtube user's icon" />
+      </div>
+    </header>
+    <div class="main-container">
+      <aside class="left-section">
+        <ul class="top-section">
+          <li class="current">
+            <i class="fi fi-rs-home section-icon"></i>
+            <p>Home</p>
+          </li>
+          <li>
+            <i class="fi fi-rs-navigation section-icon"></i>
+            <p>Explore</p>
+          </li>
+          <li>
+            <i class="fi fi-rs-play-alt section-icon"></i>
+            <p>Shorts</p>
+          </li>
+          <li>
+            <i class="fi fi-rs-following section-icon"></i>
+            <p>Subscriptions</p>
+          </li>
+        </ul>
+        <ul class="middle-section">
+          <li>
+            <i class="fi fi-rs-play-alt section-icon"></i>
+            <p>Library</p>
+          </li>
+          <li>
+            <i class="fi fi-rs-play-alt section-icon"></i>
+            <p>History</p>
+          </li>
+          <li>
+            <i class="fi fi-rs-play section-icon"></i>
+            <p>Your videos</p>
+          </li>
+          <li>
+            <i class="fi fi-rs-clock section-icon"></i>
+            <p>Watch later</p>
+          </li>
+          <li>
+            <i class="fi fi-rs-thumbs-up section-icon"></i>
+            <p>Liked videos</p>
+          </li>
+          <li>
+            <i class="fi fi-rs-angle-down sub-icon section-icon"></i>
+            <p>Show more</p>
+          </li>
+        </ul>
+        <ul class="subscriptions">
+          <h5>SUBSCRIPTIONS</h5>
+          <li>
+            <img src="assets/sub1.png" alt="Sonya Lwu icon" class="sub-icon" />
+            <p>Sonya Lwu</p>
+          </li>
+          <li>
+            <img src="assets/sub2.png" alt="Gurky icon" class="sub-icon" />
+            <p>Gurky</p>
+          </li>
+          <li>
+            <img src="assets/sub3.png" alt="Gurky icon" class="sub-icon" />
+            <p>Feldup</p>
+          </li>
+          <li>
+            <img src="assets/sub4.png" alt="Best of Antoine Daniel icon" class="sub-icon" />
+            <p>Best of Antoine Da...</p>
+          </li>
+          <li>
+            <img src="assets/sub5.png" alt="Ultia icon" class="sub-icon" />
+            <p>Ultia</p>
+          </li>
+          <li>
+            <img src="assets/sub6.png" alt="Benjamin Code icon" class="sub-icon" />
+            <p>Benjamin Code</p>
+          </li>
+          <li>
+            <i class="fi fi-rs-angle-down sub-icon"></i>
+            <p>Show 113 more</p>
+          </li>
+        </ul>
+        <ul class="more-youtube">
+          <h5>MORE FROM YOUTUBE</h5>
+          <li>YouTube Premium</li>
+        </ul>
+      </aside>
+      <div class="nav-video-container">
+        <nav id="navigation" class="navigation"></nav>
+        <div id="videos-container" class="videos-container"></div>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
