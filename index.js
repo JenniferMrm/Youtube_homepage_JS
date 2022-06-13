@@ -162,7 +162,7 @@ function addFilterAndReinjectThumbnails(element) {
 const searchBar = document.getElementById("search-bar");
 searchBar.addEventListener("input", (event) => {
   const searchValue = event.target.value;
-  videosContainer.innerHTMl = "";
+  videosContainer.innerHTML = "";
   let searchedVideos = [];
   if (!searchValue) {
     searchedVideos = videos;
