@@ -35,7 +35,7 @@ const chips = [
 ];
 
 const videos = [
-  new Thumbnail("Music", "NEON STRING bass sounds FUNKY", "assets/1.png", "CharlesBerthoud", "assets/avatar1.png", "327K views •", "2 days ago"),
+  new Thumbnail("Bass", "NEON STRING bass sounds FUNKY", "assets/1.png", "CharlesBerthoud", "assets/avatar1.png", "327K views •", "2 days ago"),
   new Thumbnail("Podcasts", "Learn Javascrypt basics", "assets/2.png", "Tony Alicea", "assets/avatar2.png", "2.1M views •", "3 years ago"),
   new Thumbnail("Animals", "How we feed our foster foxes", "assets/3.png", "SaveAFox", "assets/avatar3.png", "125K views •", "1 week ago"),
   new Thumbnail("Music", "VULFPECK /// Disco Ulysses (Instrumental)", "assets/4.png", "Vulf", "assets/avatar4.png", "3.6M views •", "3 years ago"),
@@ -52,7 +52,7 @@ const videos = [
   ),
   new Thumbnail("Animals", "FIREFOX", "assets/8.png", "TheRedPanda", "assets/avatar8.png", "5M views •", "4 years ago"),
   new Thumbnail(
-    "Music",
+    "Bass",
     "Queen - Bohemian Rhapsody - Bass Tab",
     "assets/9.png",
     "CoverSolutions",
@@ -117,16 +117,37 @@ function createThumbnailElement(parent, thumbnailUrl, avatar, title, author, vie
   const thumbnailDate = createDomElement("p", "thumbnail-date", viewsDateContainer, date);
 }
 
-function createNoVideoElement(parent, imgUrl, value) {
+function createPlaceholderElement(parent, imgUrl, value) {
   const noVideoContainer = createDomElement("div", "no-video-container", parent, imgUrl);
   const noVideoImg = createDomElement("img", "no-video-img", noVideoContainer, imgUrl);
   const noVideoText = createDomElement("p", "no-video-text", noVideoContainer, value);
 }
 
+function injectPlaceholdertWithData() {
+  const imgUrl = "./assets/no-video.png";
+  const value = "No videos found";
+  createPlaceholderElement(videosContainer, imgUrl, value);
+}
+
+function addPlaceholderOrInjectThumbnail(array) {
+  if (!array.length) {
+    injectPlaceholdertWithData();
+  } else {
+    array.map((item) => {
+      const thumbnailUrl = item.thumbnail;
+      const avatar = item.authorAvatar;
+      const title = item.title;
+      const author = item.author;
+      const views = item.views;
+      const date = item.date;
+      createThumbnailElement(videosContainer, thumbnailUrl, avatar, title, author, views, date);
+    });
+  }
+}
+
 function addFilterAndReinjectThumbnails(element) {
-  let elementValue = null;
   element.addEventListener("click", (event) => {
-    elementValue = event.target.innerHTML;
+    const elementValue = event.target.innerText;
     videosContainer.innerHTML = "";
     let filteredVideos = [];
     if (elementValue == "All") {
@@ -134,28 +155,30 @@ function addFilterAndReinjectThumbnails(element) {
     } else {
       filteredVideos = videos.filter((video) => video.category == elementValue);
     }
-    if (!filteredVideos.length) {
-      const imgUrl = "./assets/no-video.png";
-      const value = "No videos found";
-      createNoVideoElement(videosContainer, imgUrl, value);
-    } else {
-      filteredVideos.map((video) => {
-        const thumbnailUrl = video.thumbnail;
-        const avatar = video.authorAvatar;
-        const title = video.title;
-        const author = video.author;
-        const views = video.views;
-        const date = video.date;
-        createThumbnailElement(videosContainer, thumbnailUrl, avatar, title, author, views, date);
-      });
-    }
+    addPlaceholderOrInjectThumbnail(filteredVideos);
   });
 }
+
+const searchBar = document.getElementById("search-bar");
+searchBar.addEventListener("input", (event) => {
+  const searchValue = event.target.value;
+  videosContainer.innerHTML = "";
+  let searchedVideos = [];
+  if (!searchValue) {
+    searchedVideos = videos;
+  } else {
+    searchedVideos = videos.filter((video) => {
+      return video.title.toLowerCase().includes(searchValue.toLowerCase());
+    });
+    console.log(searchedVideos);
+  }
+  addPlaceholderOrInjectThumbnail(searchedVideos);
+});
 
 function createChipElement(parent, category) {
   const chip = createDomElement("div", "chip", parent);
   const chipText = createDomElement("p", "chip-text", chip, category);
-  addFilterAndReinjectThumbnails(chipText);
+  addFilterAndReinjectThumbnails(chip);
 }
 
 function injectChipsWithData() {
