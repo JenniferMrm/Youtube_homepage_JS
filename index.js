@@ -16,6 +16,24 @@ class Thumbnail extends Video {
   }
 }
 
+const chips = [
+  new Video("All"),
+  new Video("Bass"),
+  new Video("TV shows"),
+  new Video("Gaming"),
+  new Video("Movies"),
+  new Video("Podcasts"),
+  new Video("Documentaries"),
+  new Video("Animals"),
+  new Video("Live"),
+  new Video("Sports"),
+  new Video("Cooking shows"),
+  new Video("News"),
+  new Video("Music"),
+  new Video("Entertainment"),
+  new Video("History"),
+];
+
 const videos = [
   new Thumbnail("Music", "NEON STRING bass sounds FUNKY", "assets/1.png", "CharlesBerthoud", "assets/avatar1.png", "327K views •", "2 days ago"),
   new Thumbnail("Podcasts", "Learn Javascrypt basics", "assets/2.png", "Tony Alicea", "assets/avatar2.png", "2.1M views •", "3 years ago"),
@@ -71,24 +89,6 @@ const videos = [
   ),
 ];
 
-const chips = [
-  new Video("All"),
-  new Video("Bass"),
-  new Video("TV shows"),
-  new Video("Gaming"),
-  new Video("Movies"),
-  new Video("Podcasts"),
-  new Video("Documentaries"),
-  new Video("Animals"),
-  new Video("Live"),
-  new Video("Sports"),
-  new Video("Cooking shows"),
-  new Video("News"),
-  new Video("Music"),
-  new Video("Entertainment"),
-  new Video("History"),
-];
-
 const videosContainer = document.querySelector("#videos-container");
 const navigation = document.querySelector("#navigation");
 
@@ -117,13 +117,58 @@ function createThumbnailElement(parent, thumbnailUrl, avatar, title, author, vie
   const thumbnailDate = createDomElement("p", "thumbnail-date", viewsDateContainer, date);
 }
 
+function createNoVideoElement(parent, imgUrl, value) {
+  const noVideoContainer = createDomElement("div", "no-video-container", parent, imgUrl);
+  const noVideoImg = createDomElement("img", "no-video-img", noVideoContainer, imgUrl);
+  const noVideoText = createDomElement("p", "no-video-text", noVideoContainer, value);
+}
+
+function addFilterAndReinjectThumbnails(element) {
+  let elementValue = null;
+  element.addEventListener("click", (event) => {
+    elementValue = event.target.innerHTML;
+    videosContainer.innerHTML = "";
+    let filteredVideos = [];
+    if (elementValue == "All") {
+      filteredVideos = videos;
+    } else {
+      filteredVideos = videos.filter((video) => video.category == elementValue);
+    }
+    if (!filteredVideos.length) {
+      const imgUrl = "./assets/no-video.png";
+      const value = "No videos found";
+      createNoVideoElement(videosContainer, imgUrl, value);
+    } else {
+      filteredVideos.map((video) => {
+        const thumbnailUrl = video.thumbnail;
+        const avatar = video.authorAvatar;
+        const title = video.title;
+        const author = video.author;
+        const views = video.views;
+        const date = video.date;
+        createThumbnailElement(videosContainer, thumbnailUrl, avatar, title, author, views, date);
+      });
+    }
+  });
+}
+
 function createChipElement(parent, category) {
   const chip = createDomElement("div", "chip", parent);
   const chipText = createDomElement("p", "chip-text", chip, category);
+  addFilterAndReinjectThumbnails(chipText);
 }
 
+function injectChipsWithData() {
+  chips.map((chip) => {
+    const category = chip.category;
+    createChipElement(navigation, category);
+  });
+}
+
+injectChipsWithData();
+
 function injectThumbnailsWithData() {
-  videos.map((video) => {
+  return videos.map((video) => {
     const thumbnailUrl = video.thumbnail;
     const avatar = video.authorAvatar;
     const title = video.title;
@@ -134,12 +179,4 @@ function injectThumbnailsWithData() {
   });
 }
 
-function injectChipsWithData() {
-  chips.map((chip) => {
-    const category = chip.category;
-    createChipElement(navigation, category);
-  });
-}
-
 injectThumbnailsWithData();
-injectChipsWithData();
